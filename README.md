@@ -1,153 +1,96 @@
-LemmMade Etsy Alt Generator
+
+# LemmMade Etsy Alt Generator
 
 This project contains a Python script that generates and adjusts alt text descriptions for Etsy images. It summarizes each description to fit within a specified character limit, while retaining the main content.
-Prerequisites
 
-Before you start, ensure you have the following:
+## Usage
 
-    iTerm (Mac's Terminal application) installed.
-    Homebrew installed, which is used to install software packages on macOS.
-    Visual Studio Code (VS Code) installed, a popular code editor.
+### 1. Clone the Repository
 
-Steps to Set Up
+1. Open your terminal (iTerm or similar).
+2. Navigate to a folder where you want to save the project:
+   ```bash
+   cd ~/Desktop
+   ```
+3. Clone the repository:
+   ```bash
+   git clone git@github.com:justmolliecate/LemmMade-Etsy-Alt-Generator.git
+   ```
 
-Follow these detailed steps to get everything set up, even if you've never used Python before.
-1. Install Homebrew
+### 2. Open the Project in Visual Studio Code
 
-If you don’t already have Homebrew installed, follow these steps:
+1. Navigate to the project folder:
+   ```bash
+   cd LemmMade-Etsy-Alt-Generator
+   ```
+2. Open the project in Visual Studio Code:
+   ```bash
+   code .
+   ```
 
-    Open iTerm (or the regular Terminal app).
+### 3. Install the Required Python Packages
 
-    Paste the following command to install Homebrew:
+In Visual Studio Code, open the integrated terminal (go to **View > Terminal**) and run:
 
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    Follow the on-screen instructions to complete the installation.
-
-    You might need to enter your Mac's password during installation.
-
-2. Use Homebrew to Install Python
-
-Now that Homebrew is installed, you can use it to install Python:
-
-    In iTerm, run:
-
-brew install python
-
-Once installed, check if Python is installed correctly:
-
-    python3 --version
-
-    You should see an output like Python 3.x.x. This means Python 3 is installed.
-
-3. Install Visual Studio Code
-
-If you don’t already have Visual Studio Code:
-
-    Download it from the official website.
-    Install VS Code by dragging it to your Applications folder.
-
-4. Clone This Repository Using iTerm
-
-    Navigate to a folder where you want to store this project. For example, your Desktop:
-
-cd ~/Desktop
-
-Clone the Repository:
-
-    If you have set up SSH with GitHub, use:
-
-git clone git@github.com:justmolliecate/LemmMade-Etsy-Alt-Generator.git
-
-Otherwise, use HTTPS:
-
-    git clone https://github.com/justmolliecate/LemmMade-Etsy-Alt-Generator.git
-
-Navigate to the Project Folder:
-
-    cd LemmMade-Etsy-Alt-Generator
-
-5. Open the Project in Visual Studio Code
-
-    In iTerm, open the project in Visual Studio Code by running:
-
-    code .
-
-    This command opens the current folder (LemmMade-Etsy-Alt-Generator) in VS Code.
-
-6. Install Required Python Packages
-
-This project requires some specific Python packages. To install them, follow these steps:
-
-    In VS Code, open the integrated terminal by going to View > Terminal.
-
-    Run the following command to install the necessary packages:
-
+```bash
 pip3 install -r requirements.txt
+```
 
-    Note: If pip3 is not recognized, you may need to install pip separately by running:
+This installs the necessary packages listed in `requirements.txt`.
 
-        python3 -m ensurepip --upgrade
+### 4. Prepare Input and Output Folders
 
-7. Prepare Your Input and Output Folders
+1. Create two folders within the project:
+   - **input** – for the JSON files with original descriptions.
+   - **output** – for the summarized descriptions.
 
-    In the Explorer panel on the left side of VS Code, create two folders in your project:
-        Right-click on the project folder and select New Folder.
-        Name one folder input and the other output.
+   You can do this in Visual Studio Code:
+   - Right-click in the **Explorer** panel and choose **New Folder**.
+   - Name one folder **input** and the other **output**.
 
-    Place Your JSON Files in the input Folder:
-        Each JSON file should contain image descriptions. Here’s an example of what the content should look like:
+2. **Place JSON Files in the `input` Folder**:
+   - Each JSON file should contain image descriptions in this format:
+     ```json
+     {
+         "image1.jpg": "Long description of image 1...",
+         "image2.jpg": "Another long description of image 2...",
+         ...
+     }
+     ```
 
-        {
-            "image1.jpg": "Long description of image 1...",
-            "image2.jpg": "Another long description of image 2...",
-            ...
-        }
+### 5. Run the Script
 
-8. Run the Script to Process Descriptions
+In the Visual Studio Code terminal, run the script to process the descriptions:
 
-    In VS Code, with the terminal open, ensure you're in the project folder (LemmMade-Etsy-Alt-Generator).
+```bash
+python3 summarize_descriptions.py
+```
 
-    Run the following command to execute the script:
+- The script reads each JSON file from the `input` folder, summarizes the descriptions to fit within 250 characters, and saves each summarized description as a `.txt` file in the `output` folder.
 
-    python3 summarize_descriptions.py
+### 6. Check the Output
 
-    This will:
-        Read JSON files from the input folder.
-        Summarize each description to fit within 250 characters.
-        Save each summarized description to a .txt file in the output folder.
+1. Open the `output` folder in the **Explorer** panel of Visual Studio Code.
+2. You should see a `.txt` file for each JSON file processed, with each line formatted as `image_name: summarized_description`.
 
-9. Check the Output
+   Example output in `output/image_descriptions_summarized.txt`:
+   ```
+   image1.jpg: Shortened description for image 1.
+   image2.jpg: Shortened description for image 2.
+   ```
 
-    Open the output folder in VS Code’s Explorer panel.
+### Troubleshooting
 
-    You should see a .txt file for each JSON file processed, containing the summarized descriptions.
+- If `pip3` isn’t recognized, ensure Python 3 is properly installed.
+- If you encounter any issues with package installations, try upgrading `pip`:
+  ```bash
+  pip3 install --upgrade pip
+  ```
 
-    Example contents in output/image_descriptions_summarized.txt:
+### Customizing the Character Limit
 
-    image1.jpg: Shortened description for image 1.
-    image2.jpg: Shortened description for image 2.
+If you want to adjust the character limit, open `summarize_descriptions.py` in VS Code, find the `char_limit` parameter in the `process_json_files` function, and change it to your desired limit.
 
-Troubleshooting
-
-    If python3 isn’t recognized, ensure Python 3 was installed properly using Homebrew.
-    If you encounter any issues with package installations, try running:
-
-    pip3 install --upgrade pip
-
-    to ensure pip is up to date.
-
-Example Workflow Recap
-
-    Put JSON files in the input folder.
-    Run the script using python3 summarize_descriptions.py.
-    View summarized descriptions in the output folder.
-
-Additional Notes
-
-    This script uses the Hugging Face Transformers library to summarize text, so the first run may take a while as it downloads model files.
-    Feel free to adjust the char_limit parameter in summarize_descriptions.py to change the character limit.
-
-License
+### License
 
 This project is licensed under the MIT License.
