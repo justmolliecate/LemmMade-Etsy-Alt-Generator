@@ -15,8 +15,8 @@ def summarize_description(text, char_limit=250):
     """
     summarizer = pipeline("summarization", model="t5-small")
     
-    # Generate summary
-    summary = summarizer(text, max_length=char_limit // 5, min_length=10, do_sample=False)
+    # Generate a more detailed summary by increasing max_length
+    summary = summarizer(text, max_length=min(char_limit // 4, 80), min_length=30, do_sample=False)
     summarized_text = summary[0]['summary_text']
     
     # Ensure it fits the character limit and is coherent
@@ -24,6 +24,9 @@ def summarize_description(text, char_limit=250):
         summarized_text = summarized_text[:char_limit]
         if ' ' in summarized_text:
             summarized_text = summarized_text.rsplit(' ', 1)[0]
+    
+    # Remove any spaces before periods
+    summarized_text = summarized_text.replace(" .", ".")
     
     return summarized_text
 
